@@ -15,6 +15,10 @@ class ConfigBuilder extends Builder {
 
   @override
   Future<void> build(BuildStep buildStep) async {
+    final filePath = buildStep.inputId.path;
+    if (!(filePath.contains("config.json"))) {
+      return;
+    }
     final rawJson = await buildStep.readAsString(buildStep.inputId);
     Map<String, dynamic> parsedJson = jsonDecode(rawJson);
     final variant = options.config['variant'] ?? 'debug';
